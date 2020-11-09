@@ -3,8 +3,13 @@
 /**
  * Abstraction to handle a user in the database.
  */
-class Users implements Entity
+class Users extends EntityFunctionality implements Entity
 {
+    /**
+     * Table name that contains the users.
+     */
+    const TABLE_NAME = 'users';
+
     /**
      * Default user values.
      * 
@@ -20,32 +25,13 @@ class Users implements Entity
     ];
 
     /**
-     * Table name that stores the users.
-     * 
-     * @var string
-     */
-    protected $tableName = 'users';
-
-    /**
-     * Stores the database connection.
-     */
-    protected $dbConnection;
-
-    /**
-     * Stores a user as an array.
-     * 
-     * @var array
-     */
-    protected $entity = self::DEFAULT_USER_VALUES;
-
-    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection
      */
     public function __construct( $dbConnection )
     {
-        $this->dbConnection = $dbConnection;
+        parent::__construct( $dbConnection, self::TABLE_NAME, self::DEFAULT_USER_VALUES );
     }
 
     /**
