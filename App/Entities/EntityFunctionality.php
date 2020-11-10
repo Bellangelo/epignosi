@@ -161,7 +161,7 @@ class EntityFunctionality implements Entity
      */
     private function createInsertSQL( $entity )
     {
-        $sql = 'INSERT INTO `' . $this->tableName . '`';
+        $sql = 'INSERT INTO ' . $this->tableName;
         $columns = '';
         $values = '';
 
@@ -173,7 +173,7 @@ class EntityFunctionality implements Entity
         $columns = substr( $columns, 1 );
         $values = substr( $values, 1 );
 
-        $sql .= ' ' . $columns . ' VALUES (' . $values . ')';
+        $sql .= ' (' . $columns . ') VALUES (' . $values . ')';
         return $sql;
     }
 
@@ -187,7 +187,7 @@ class EntityFunctionality implements Entity
      */
     private function createUpdateSQL( $values, $where )
     {
-        $sql = 'UPDATE `' . $this->tableName . '` SET ';
+        $sql = 'UPDATE ' . $this->tableName . ' SET ';
         $set = '';
 
         foreach ( $values as $key => $value ) {
@@ -243,7 +243,7 @@ class EntityFunctionality implements Entity
             $orderBySQL = ' ORDER BY ' . mysqli_real_escape_string( $this->dbConnection, $orderBy );
         }
 
-        $sql = 'SELECT ' . $returnValuesSQL . ' FROM `' . $this->tableName . '`
+        $sql = 'SELECT ' . $returnValuesSQL . ' FROM ' . $this->tableName . '
             WHERE ' . $whereSQL . ' ' . $orderBySQL . ' ' . $limitSQL;
         return $sql;
     }
