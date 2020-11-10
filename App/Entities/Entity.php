@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entities;
+
 /**
  * Main interface that Entities should implement.
  * It is used to have the same functionality across all Entities.

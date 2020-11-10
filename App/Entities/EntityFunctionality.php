@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entities;
+
 /**
  * Handles the main logic of Entities like insert, update, delete, etc.
  */

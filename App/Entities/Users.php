@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Entities;
+
 /**
  * Abstraction to handle a user in the database.
  */
