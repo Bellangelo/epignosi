@@ -4,14 +4,20 @@ RewriteEngine on
 RewriteCond %{HTTP_HOST} ^localhost$ [NC,OR]
 RewriteCond %{HTTP_HOST} ^www.localhost$
 
+RewriteCond %{REQUEST_URI} ^/epignosi/css
+RewriteCond %{REQUEST_URI} !^/epignosi/src
+RewriteRule (.*)/(.*) /epignosi/src/assets/css/$2 [L]
+
+RewriteCond %{REQUEST_URI} ^/epignosi/js
+RewriteCond %{REQUEST_URI} !^/epignosi/src
+RewriteRule (.*)/(.*) /epignosi/src/assets/js/$2 [L]
+
 RewriteCond %{REQUEST_URI} ^/epignosi/actions
-RewriteCond %{REQUEST_URI} !^/epignosi/src/pages
-RewriteCond %{REQUEST_URI} !^/epignosi/src/actions
+RewriteCond %{REQUEST_URI} !^/epignosi/src
 RewriteRule (.*)/(.*) /epignosi/src/actions/$2 [L]
 
 RewriteCond %{REQUEST_URI} !^/epignosi/actions
-RewriteCond %{REQUEST_URI} !^/epignosi/src/pages
-RewriteCond %{REQUEST_URI} !^/epignosi/src/actions
+RewriteCond %{REQUEST_URI} !^/epignosi/src
 RewriteRule (.*) /epignosi/src/pages/$1 [L]
 
 
