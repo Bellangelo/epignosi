@@ -103,10 +103,11 @@ class EntityFunctionality implements Entity
      * @param array $values
      * @param string|int|null $limit
      * @param array $returnValues
+     * @param string $orderBy
      * @return array $results
      * @throws Exception
      */
-    public function find( $values, $limit = null, $returnValues = null )
+    public function find( $values, $limit = null, $returnValues = null, $orderBy = null )
     {
         $results = [];
         // Validate keys.
@@ -122,7 +123,7 @@ class EntityFunctionality implements Entity
 
         }
 
-        $sql = $this->createSelectSQL( $values, $limit, $returnValues );
+        $sql = $this->createSelectSQL( $values, $limit, $returnValues, $orderBy );
         $query = mysqli_query( $this->dbConnection, $sql );
         
         if ( !$query ) {
@@ -205,13 +206,15 @@ class EntityFunctionality implements Entity
      * @param array $values
      * @param string|int|null $limit
      * @param array $returnValues
+     * @param string $orderBy
      * @return string
      */
-    private function createSelectSQL( $values, $limit = null, $returnValues = null )
+    private function createSelectSQL( $values, $limit = null, $returnValues = null, $orderBy = null )
     {
-        $returnValuesSQL = '*';
+        $returnValuesSQL = '';
         $limitSQL = '';
         $whereSQL = '';
+        $orderBySQL = '';
         
         // Create returned values sql.
         if ( !empty( $returnValues ) ) {
@@ -223,18 +226,25 @@ class EntityFunctionality implements Entity
             $returnValuesSQL = substr( $returnValuesSQL, 1 );
 
         }
+        else {
+            $returnValuesSQL = '*';
+        }
 
         // Create the limit sql.
         if ( !empty( $limit ) ) {
-            $limitSQL = mysqli_real_escape_string( $this->dbConnection, $limit );
+            $limitSQL = ' LIMIT ' . mysqli_real_escape_string( $this->dbConnection, $limit );
         }
 
         // Create the where sql.
         $whereSQL = $this->arrayToWhere( $values );
 
+        // Create order by sql.
+        if ( !empty( $orderBy ) ) {
+            $orderBySQL = ' ORDER BY ' . mysqli_real_escape_string( $this->dbConnection, $orderBy );
+        }
 
         $sql = 'SELECT ' . $returnValuesSQL . ' FROM `' . $this->tableName . '`
-            WHERE ' . $whereSQL . ' ' . $limitSQL;
+            WHERE ' . $whereSQL . ' ' . $orderBySQL . ' ' . $limitSQL;
         return $sql;
     }
 
