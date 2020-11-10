@@ -75,6 +75,29 @@ class Users extends EntityFunctionality
     ];
 
     /**
+     * Admin user type.
+     * 
+     * @var string
+     */
+    const USER_TYPE_ADMIN = 'admin';
+
+    /**
+     * Employee user type.
+     * 
+     * @var string
+     */
+    const USER_TYPE_EMPLOYEE = 'employee';
+
+    /**
+     * Entity specific values.
+     * 
+     * @var array
+     */
+    protected $entitySpecificValues = [
+        self::COLUMN_USER_TYPE => [ self::USER_TYPE_EMPLOYEE, self::USER_TYPE_ADMIN ]
+    ];
+
+    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection
@@ -82,14 +105,6 @@ class Users extends EntityFunctionality
     public function __construct( $dbConnection )
     {
         parent::__construct( $dbConnection, self::TABLE_NAME, self::DEFAULT_USER_VALUES );
-    }
-
-    /**
-     * Stores a user in the database.
-     */
-    public function insert()
-    {
-
     }
 
 }

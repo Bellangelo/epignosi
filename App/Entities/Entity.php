@@ -26,6 +26,13 @@ interface Entity
     protected $entity;
 
     /**
+     * Entity specific values.
+     * 
+     * @var array
+     */
+    protected $entitySpecificValues;
+
+    /**
      * Inserts the entity.
      */
     public function insert();

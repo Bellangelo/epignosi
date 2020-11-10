@@ -25,6 +25,13 @@ class EntityFunctionality implements Entity
     protected $entity;
 
     /**
+     * Entity specific values.
+     * 
+     * @var array
+     */
+    protected $entitySpecificValues;
+
+    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection
@@ -43,6 +50,7 @@ class EntityFunctionality implements Entity
      */
     public function insert()
     {
+        $this->validateEntity();
         $sql = $this->createInsertSQL( $this->entity );
         $query = mysqli_query( $this->dbConnection, $sql );
         return $query;
@@ -57,10 +65,13 @@ class EntityFunctionality implements Entity
      */
     public function update( $values, $where )
     {
+        // Validate keys and values.
         foreach ( $values as $key => $value ) {
             $this->validateKey( $key );
         }
 
+        $this->checkEntityValues( $values );
+        // Validate the Where clause keys.
         foreach ( $where as $key => $value ) {
             $this->validateKey( $key );
         }
@@ -80,6 +91,7 @@ class EntityFunctionality implements Entity
     public function set( $key, $value )
     {
         $this->validateKey( $key );
+        $this->checkEntityValues( [ $key => $value ] );
         $this->entity[ $key ] = $value;
     }
 
@@ -159,6 +171,56 @@ class EntityFunctionality implements Entity
         // Remove the first 'AND'.
         $sql = substr( $sql, 4);
         return $sql;
+    }
+
+    /**
+     * Validates the current entity fields.
+     * 
+     * @return boolean
+     * @throws \Exception
+     */
+    protected function validateEntity()
+    {
+        $this->doNotAllowEmptyValues( $this->entity );
+        $this->checkEntityValues( $this->entity );
+    }
+
+    /**
+     * Checks that specific entity keys/columns contains specific values.
+     * 
+     * @param array $entity
+     * @throws \Exception
+     */
+    protected function checkEntityValues( $entity )
+    {
+        if ( empty( $this->entitySpecificValues ) ) {
+            return true;
+        }
+
+        foreach( $this->entitySpecificValues as $key => $values ) {
+
+            if ( !in_array( $entity[ $key ], $values ) ) {
+                throw new \Exception ( 'Column "' . $key . '" is not allowed to have the value "' . $entity[ $key ] . '"' );
+            }
+
+        }
+    }
+
+    /**
+     * Checks that the entity does not contain empty values.
+     * 
+     * @param array $entity
+     * @throws \Exception
+     */
+    protected function doNotAllowEmptyValues( $entity )
+    {
+        foreach ( $entity as $value ) {
+            if ( empty( $value ) ) {
+                throw new \Exception ( 'Column "' . $value . '" cannot be empty.' );
+            }
+        }
+
+        return true;
     }
 
 }

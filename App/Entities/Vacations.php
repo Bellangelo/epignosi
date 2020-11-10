@@ -75,6 +75,36 @@ class Vacations extends EntityFunctionality
     ];
 
     /**
+     * Pending status.
+     * 
+     * @var string
+     */
+    const STATUS_PENDING = 'pending';
+
+    /**
+     * Rejected status.
+     * 
+     * @var string
+     */
+    const STATUS_REJECTED = 'rejected';
+
+    /**
+     * Approved status.
+     * 
+     * @var string
+     */
+    const STATUS_APPROVED = 'approved';
+
+    /**
+     * Entity specific values.
+     * 
+     * @var array
+     */
+    protected $entitySpecificValues = [
+        self::COLUMN_STATUS => [ self::STATUS_PENDING, self::STATUS_REJECTED, self::STATUS_APPROVED ]
+    ];
+
+    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection
@@ -82,14 +112,6 @@ class Vacations extends EntityFunctionality
     public function __construct( $dbConnection )
     {
         parent::__construct( $dbConnection, self::TABLE_NAME, self::DEFAULT_VACATION_VALUES );
-    }
-
-    /**
-     * Stores a vacation in the database.
-     */
-    public function insert()
-    {
-
     }
 
 }
