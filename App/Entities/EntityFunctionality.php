@@ -98,6 +98,45 @@ class EntityFunctionality implements Entity
     }
 
     /**
+     * Selects from database based on parameters.
+     * 
+     * @param array $values
+     * @param string|int|null $limit
+     * @param array $returnValues
+     * @return array $results
+     * @throws Exception
+     */
+    public function find( $values, $limit = null, $returnValues = null )
+    {
+        $results = [];
+        // Validate keys.
+        foreach ( $values as $key => $value ) {
+            $this->validateKey( $key );
+        }
+        // Validate returned values.
+        if ( !empty( $returnValues ) ) {
+
+            foreach ( $returnValues as $value ) {
+                $this->validateKey( $value );
+            }
+
+        }
+
+        $sql = $this->createSelectSQL( $values, $limit, $returnValues );
+        $query = mysqli_query( $this->dbConnection, $sql );
+        
+        if ( !$query ) {
+            throw new \Exception ( 'Database error.' );
+        }
+
+        while( $data = mysqli_fetch_assoc( $query ) ) {
+            $results[] = $data;
+        }
+
+        return $results;
+    }
+
+    /**
      * Checks if key exists in the entity.
      * 
      * @param string $key
@@ -117,6 +156,7 @@ class EntityFunctionality implements Entity
      * Builds the sql insert query based on the passed entity.
      * 
      * @param array $entity
+     * @return string $sql
      */
     private function createInsertSQL( $entity )
     {
@@ -142,6 +182,7 @@ class EntityFunctionality implements Entity
      * @param string|int $entityId
      * @param array $values
      * @param array $where
+     * @return string
      */
     private function createUpdateSQL( $values, $where )
     {
@@ -156,6 +197,45 @@ class EntityFunctionality implements Entity
 
         $sql .= $set . ' WHERE ' . $this->arrayToWhere( $where );
         return $sql; 
+    }
+
+    /**
+     * Builds the sql select query based on params.
+     * 
+     * @param array $values
+     * @param string|int|null $limit
+     * @param array $returnValues
+     * @return string
+     */
+    private function createSelectSQL( $values, $limit = null, $returnValues = null )
+    {
+        $returnValuesSQL = '*';
+        $limitSQL = '';
+        $whereSQL = '';
+        
+        // Create returned values sql.
+        if ( !empty( $returnValues ) ) {
+
+            foreach( $returnValues as $value ) {
+                $returnValuesSQL .= ',`' . mysqli_real_escape_string( $this->dbConnection, $value ) . '`';
+            }
+            // Remove first comma.
+            $returnValuesSQL = substr( $returnValuesSQL, 1 );
+
+        }
+
+        // Create the limit sql.
+        if ( !empty( $limit ) ) {
+            $limitSQL = mysqli_real_escape_string( $this->dbConnection, $limit );
+        }
+
+        // Create the where sql.
+        $whereSQL = $this->arrayToWhere( $values );
+
+
+        $sql = 'SELECT ' . $returnValuesSQL . ' FROM `' . $this->tableName . '`
+            WHERE ' . $whereSQL . ' ' . $limitSQL;
+        return $sql;
     }
 
     /**
