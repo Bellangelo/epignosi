@@ -1,0 +1,34 @@
+.main {
+    width:300px;
+    margin:auto;
+}
+
+form {
+    border:1px solid #ccc;
+    padding:20px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom:10px;
+    font-weight: 600;
+}
+
+input {
+    width:100%;
+    display:block;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius: 3px;
+    box-sizing:border-box;
+    margin-bottom:10px;
+}
+
+[type="submit"] {
+    background-color:#eee;
+    cursor:pointer;
+}
+
+[type="submit"]:hover {
+    background-color:#ccc;
+}
