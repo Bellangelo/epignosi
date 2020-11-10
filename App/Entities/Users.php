@@ -3,7 +3,7 @@
 /**
  * Abstraction to handle a user in the database.
  */
-class Users extends EntityFunctionality implements Entity
+class Users extends EntityFunctionality
 {
     /**
      * Table name that contains the users.
@@ -90,22 +90,6 @@ class Users extends EntityFunctionality implements Entity
     public function insert()
     {
 
-    }
-
-    /**
-     * Updates a user in the database.
-     */
-    public function update()
-    {
-
-    }
-
-    /**
-     * Sets a value of the stored user in the class.
-     */
-    public function set()
-    {
-        
     }
 
 }

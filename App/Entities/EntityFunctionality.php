@@ -38,26 +38,127 @@ class EntityFunctionality implements Entity
 
     /**
      * Stores the entity in the database.
+     * 
+     * @return boolean
      */
     public function insert()
     {
-
+        $sql = $this->createInsertSQL( $this->entity );
+        $query = mysqli_query( $this->dbConnection, $sql );
+        return $query;
     }
 
     /**
      * Updates the entity in the database.
+     * 
+     * @param array $values
+     * @param array $where
+     * @throws \Exception
      */
-    public function update()
+    public function update( $values, $where )
     {
+        foreach ( $values as $key => $value ) {
+            $this->validateKey( $key );
+        }
 
+        foreach ( $where as $key => $value ) {
+            $this->validateKey( $key );
+        }
+
+        $sql = $this->createUpdateSQL( $values, $where );
+        $query = mysqli_query( $this->dbConnection, $sql );
+        return $query;
     }
 
     /**
      * Sets a value of the entity in the class.
+     * 
+     * @param string $key
+     * @param mixed $value
+     * @throws \Exception
      */
-    public function set()
+    public function set( $key, $value )
     {
-        
+        $this->validateKey( $key );
+        $this->entity[ $key ] = $value;
+    }
+
+    /**
+     * Checks if key exists in the entity.
+     * 
+     * @param string $key
+     * @throws \Exception
+     */
+    protected function validateKey( $key )
+    {
+        // Check if entity contains the specific key.
+        if ( !array_key_exists( $key, $this->entity ) ) {
+            throw new \Exception ( 'Requested key/column does not exist in the entity.' );
+        }
+
+        return true;
+    }
+
+    /**
+     * Builds the sql insert query based on the passed entity.
+     * 
+     * @param array $entity
+     */
+    private function createInsertSQL( $entity )
+    {
+        $sql = 'INSERT INTO `' . $this->tableName . '`';
+        $columns = '';
+        $values = '';
+
+        foreach ( $entity as $key => $value ) {
+            $columns .= ',`' . $key . '`';
+            $values .= ',"' . mysqli_real_escape_string( $this->dbConnection, $value ) . '"';
+        }
+        // Remove the first comma.
+        $columns = substr( $columns, 1 );
+        $values = substr( $values, 1 );
+
+        $sql .= ' ' . $columns . ' VALUES (' . $values . ')';
+        return $sql;
+    }
+
+    /**
+     * Builds the sql update query based on the passed values.
+     * 
+     * @param string|int $entityId
+     * @param array $values
+     * @param array $where
+     */
+    private function createUpdateSQL( $values, $where )
+    {
+        $sql = 'UPDATE `' . $this->tableName . '` SET ';
+        $set = '';
+
+        foreach ( $values as $key => $value ) {
+            $set .= ',`' . $key . '` = "' . mysqli_real_escape_string( $this->dbConnection, $value ) . '"';
+        }
+        // Remove first comma
+        $set = substr( $set, 1 );
+
+        $sql .= $set . ' WHERE ' . $this->arrayToWhere( $where );
+        return $sql; 
+    }
+
+    /**
+     * Converts a array to a where statement.
+     * 
+     * @param array $where
+     */
+    private function arrayToWhere( $where )
+    {
+        $sql = '';
+
+        foreach ( $where as $key => $value ) {
+            $sql = ' AND `' . $key . '` = "' . mysqli_real_escape_string( $this->dbConnection, $value ) . '"';
+        }
+        // Remove the first 'AND'.
+        $sql = substr( $sql, 4);
+        return $sql;
     }
 
 }

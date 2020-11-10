@@ -3,7 +3,7 @@
 /**
  * Abstraction to handle a vacation in the database.
  */
-class Vacations extends EntityFunctionality implements Entity
+class Vacations extends EntityFunctionality
 {
     /**
      * Table name that contains the vacations.
@@ -90,22 +90,6 @@ class Vacations extends EntityFunctionality implements Entity
     public function insert()
     {
 
-    }
-
-    /**
-     * Updates a vacation in the database.
-     */
-    public function update()
-    {
-
-    }
-
-    /**
-     * Sets a value of the stored vacation in the class.
-     */
-    public function set()
-    {
-        
     }
 
 }

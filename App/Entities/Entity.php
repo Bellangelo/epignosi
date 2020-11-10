@@ -32,12 +32,18 @@ interface Entity
 
     /**
      * Updates the entity.
+     * 
+     * @param array $values
+     * @param array $where
      */
-    public function update();
+    public function update( $values, $where );
 
     /**
      * Set a value in the entity.
+     * 
+     * @param string $key
+     * @param mixed $value
      */
-    public function set();
+    public function set( $key, $value );
 
 }
