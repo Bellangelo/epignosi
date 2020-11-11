@@ -50,4 +50,5 @@ To set database credentials you can change the const variables in the `App` clas
 ## Important notes
 * The app to work correctly must be in the top-level folder. For example, if you use XAMPP to test this app. You have to clone in into the `htdocs` folder.
 * The email class use as the domain the `localhost`. So the approve and reject links will point there.
+
 These issues could easily be prevented by allowing the user to configure domain and the application path but we have to talk about something during the interview.
