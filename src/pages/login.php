@@ -1,3 +1,15 @@
+<?php
+
+require_once dirname( __FILE__ ) . '/../../vendor/autoload.php';
+
+$app = new App\App();
+// Redirect logged in user to portal.
+if ( $app->getAuth()->isUserLogged() ) {
+    header('Location: /epignosi/portal.php');
+    exit();
+}
+
+?>
 <!DOCTYPE html>
     <head>
         <title>Login</title>
