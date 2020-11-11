@@ -42,7 +42,7 @@ class Mail
      */
     protected function sendEmail ()
     {
-        return mail( $this->recipient, $this->subject, $this->message, $this->headers );
+        return @mail( $this->recipient, $this->subject, $this->message, $this->headers );
     }
 
 }
