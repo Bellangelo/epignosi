@@ -19,12 +19,12 @@ if ( !empty( @$_POST['email'] ) && !empty( @$_POST['password'] ) ) {
     
     $userData = [ Users::COLUMN_PASSWORD, Users::COLUMN_ID ];
     $user = $userEntity->find( [ Users::COLUMN_EMAIL => $_POST['email'] ], 1, $userData );
-
+    // Email does not exist.
     if ( empty( $user ) ) {
-        $responseType = Response::MESSAGE_USER_DOES_NOT_EXIST;
+        $responseMessage = Response::MESSAGE_USER_DOES_NOT_EXIST;
     }
-    else if ( password_verify( $_POST['password'], $user[0][ Users::COLUMN_PASSWORD ] ) ) {
-
+    else if ( $userEntity->verifyPassword( $_POST['password'], $user[0][ Users::COLUMN_PASSWORD ] ) ) {
+        // Email and password are correct.
         $app->getAuth()->logUser( $user[0][ Users::COLUMN_ID ] );
         $responseType = Response::SUCCESS_TYPE;
         $responseData = [
@@ -32,7 +32,7 @@ if ( !empty( @$_POST['email'] ) && !empty( @$_POST['password'] ) ) {
         ];
         $responseMessage = '';
 
-    }
+    } // Password is incorrect.
     else {
         $responseMessage = Response::MESSAGE_INCORRECT_PASSWORD;
     }

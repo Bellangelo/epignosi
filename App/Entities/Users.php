@@ -109,4 +109,30 @@ class Users extends EntityFunctionality
         parent::__construct( $dbConnection, self::TABLE_NAME, self::DEFAULT_USER_VALUES );
     }
 
+    /**
+     * Verify password.
+     * 
+     * @param string $password
+     * @param string $hash
+     * @return boolean
+     */
+    public function verifyPassword ( $password, $hash )
+    {
+        return password_verify( $password, $hash );
+    }
+
+    /**
+     * Creates a hash.
+     * 
+     * @param string $password.
+     * @return string
+     */
+    public function createHash ( $password )
+    {
+        $options = [
+            'cost' => 12,
+        ];
+        return password_hash( $password, PASSWORD_BCRYPT, $options );
+    }
+
 }
