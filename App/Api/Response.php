@@ -2,6 +2,9 @@
 
 namespace App\Api;
 
+//TODO: Create a handler to catch Exception that the App does not catch so we can
+// print a json response in case of error.
+
 /**
  * Class that handles the api response.
  */
