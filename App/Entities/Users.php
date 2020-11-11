@@ -100,6 +100,15 @@ class Users extends EntityFunctionality
     ];
 
     /**
+     * Allowed to be empty columns.
+     * 
+     * @var array
+     */
+    protected $allowedToBeEmptyColumns = [
+        self::COLUMN_ID,
+    ];
+
+    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection

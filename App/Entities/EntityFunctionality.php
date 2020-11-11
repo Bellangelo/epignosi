@@ -34,6 +34,13 @@ class EntityFunctionality implements Entity
     protected $entitySpecificValues;
 
     /**
+     * Allowed to be empty columns.
+     * 
+     * @var array
+     */
+    protected $allowedToBeEmptyColumns = [];
+
+    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection
@@ -293,10 +300,10 @@ class EntityFunctionality implements Entity
         if ( empty( $this->entitySpecificValues ) ) {
             return true;
         }
-
+        
         foreach( $this->entitySpecificValues as $key => $values ) {
 
-            if ( !in_array( $entity[ $key ], $values ) ) {
+            if ( array_key_exists( $key, $entity ) && !in_array( $entity[ $key ], $values ) ) {
                 throw new \Exception ( 'Column "' . $key . '" is not allowed to have the value "' . $entity[ $key ] . '"' );
             }
 
@@ -311,9 +318,9 @@ class EntityFunctionality implements Entity
      */
     protected function doNotAllowEmptyValues( $entity )
     {
-        foreach ( $entity as $value ) {
-            if ( empty( $value ) ) {
-                throw new \Exception ( 'Column "' . $value . '" cannot be empty.' );
+        foreach ( $entity as $key => $value ) {
+            if ( empty( $value ) && !in_array( $key, $this->allowedToBeEmptyColumns ) ) {
+                throw new \Exception ( 'Column "' . $key . '" cannot be empty.' );
             }
         }
 

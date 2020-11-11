@@ -40,37 +40,37 @@ if ( $userData[ Users::COLUMN_USER_TYPE ] !== Users::USER_TYPE_ADMIN ) {
                         <div class="user-data">
                             <span>First Name: </span>
                             <span>
-                                <input type="text" name="<?php echo Users::COLUMN_FIRST_NAME ?>" />
+                                <input type="text" name="first_name" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Last Name: </span>
                             <span>
-                                <input type="text" name="<?php echo Users::COLUMN_LAST_NAME ?>" />
+                                <input type="text" name="last_name" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Email: </span>
                             <span>
-                                <input type="email" name="<?php echo Users::COLUMN_EMAIL ?>" />
+                                <input type="email" name="email" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Password: </span>
                             <span>
-                                <input type="password" name="<?php echo Users::COLUMN_PASSWORD ?>" />
+                                <input type="password" name="password" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Confirm Password: </span>
                             <span>
-                                <input type="password" name="<?php echo Users::COLUMN_PASSWORD ?>_2" />
+                                <input type="password" name="password_2" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>User Type: </span>
                             <span>
-                                <select name="<?php echo Users::COLUMN_USER_TYPE ?>">
+                                <select name="user_type">
                                     <option value="<?php echo Users::USER_TYPE_ADMIN ?>"><?php echo Users::USER_TYPE_ADMIN ?></option>
                                     <option value="<?php echo Users::USER_TYPE_EMPLOYEE ?>"><?php echo Users::USER_TYPE_EMPLOYEE ?></option>
                                 </select>

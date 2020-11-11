@@ -12,7 +12,7 @@ function api ( url, body ) {
         .then( res => {
             resolve( res );
         })
-        .catch( e => {
+        .catch( () => {
             resolve({
                 type: 'error',
                 message: GENERAL_ERROR,

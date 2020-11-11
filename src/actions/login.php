@@ -6,6 +6,12 @@ use App\Entities\Users;
 use App\Api\UsersResponse AS Response;
 
 $app = new App\App();
+// Redirect logged in user to login form.
+if ( $app->getAuth()->isUserLogged() ) {
+    header('Location: /epignosi/portal.php');
+    exit();
+}
+
 $response = new Response();
 
 $dbConnection = $app->getDatabaseConnection();
