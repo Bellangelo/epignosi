@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Authentication\Auth;
+use App\Security\Security;
 
 /**
  * Main class that includes all the important files.
@@ -52,6 +53,13 @@ class App
     protected $authClass;
 
     /**
+     * Security class.
+     * 
+     * @var Security
+     */
+    protected $securityClass;
+
+    /**
      * Database connection.
      * 
      * @var mysqli
@@ -64,6 +72,7 @@ class App
             self::DB_PASS, self::DB_DATABASE );
         $this->dbConnection = $this->databaseConnectionClass->getConnection();
         $this->authClass = new Auth( $this->dbConnection );
+        $this->securityClass = new Security();
     }
 
     /**
@@ -84,6 +93,16 @@ class App
     public function getDatabaseConnection()
     {
         return $this->dbConnection;
+    }
+
+    /**
+     * Returns the security class.
+     * 
+     * @return Security
+     */
+    public function getSecurity()
+    {
+        return $this->securityClass;
     }
 
 }
