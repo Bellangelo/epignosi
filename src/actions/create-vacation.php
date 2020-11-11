@@ -5,6 +5,7 @@ require_once dirname( __FILE__ ) . '/../../vendor/autoload.php';
 use App\Entities\Users;
 use App\Entities\Vacations;
 use App\Api\VacationsResponse AS Response;
+use App\Mail\VacationSubmissionNotification;
 
 $app = new App\App();
 // Redirect non-logged in user to login form.
@@ -52,11 +53,28 @@ if ( !empty( @$_POST['date_from'] )
         $vacationEntity->set( Vacations::COLUMN_USER_ID, $app->getAuth()->getUserId() );
         $vacationEntity->set( Vacations::COLUMN_STATUS, Vacations::STATUS_PENDING );
         
-        $createVacation = $vacationEntity->insert();
+        $createVacationId = $vacationEntity->insert();
 
-        if ( $createVacation ) {
+        if ( $createVacationId ) {
+
             $responseType = Response::SUCCESS_TYPE;
             $responseMessage = '';
+            // Send notification email to admin.
+            try {
+                // Get the first admin email.
+                $admin = $userEntity->find([ Users::COLUMN_USER_TYPE => Users::USER_TYPE_ADMIN ], 1, 
+                    [ Users::COLUMN_EMAIL ]);
+                $adminEmail = $admin[0][ Users::COLUMN_EMAIL ];
+
+                $userName = $userData[ Users::COLUMN_FIRST_NAME ] . ' ' . $userData[ Users::COLUMN_LAST_NAME ];
+                $mail = new VacationSubmissionNotification( $userName, $_POST['date_from'],
+                    $_POST['date_to'], $_POST['reason'], $createVacationId );
+                $mail->send( $adminEmail );
+            }
+            catch ( \Exception $e ) {
+                // TODO: Log error that we couldn't send email.
+            }
+
         }
 
     }

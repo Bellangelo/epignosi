@@ -53,16 +53,21 @@ class EntityFunctionality implements Entity
     }
 
     /**
-     * Stores the entity in the database.
+     * Stores the entity in the database. On success, it returns the created row id.
      * 
-     * @return boolean
+     * @return boolean|integer
      */
     public function insert()
     {
         $this->validateEntity();
         $sql = $this->createInsertSQL( $this->entity );
         $query = mysqli_query( $this->dbConnection, $sql );
-        return $query;
+
+        if ( !$query ) {
+            return $query;
+        }
+
+        return mysqli_insert_id( $this->dbConnection );
     }
 
     /**
