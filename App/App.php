@@ -68,8 +68,12 @@ class App
 
     public function __construct()
     {
-        $this->databaseConnectionClass = new DatabaseConnection( self::DB_SERVER, self::DB_USER, 
-            self::DB_PASS, self::DB_DATABASE );
+        $server = @$_ENV['DB_SERVER'] ?? self::DB_SERVER;
+        $dbUser = @$_ENV['DB_USER'] ?? self::DB_USER;
+        $dbPass = @$_ENV['DB_PASS'] ?? self::DB_PASS;
+        $database = @$_ENV['DB_NAME'] ?? self::DB_DATABASE;
+        $this->databaseConnectionClass = new DatabaseConnection( $server, $dbUser, 
+            $dbPass, $database );
         $this->dbConnection = $this->databaseConnectionClass->getConnection();
         $this->authClass = new Auth( $this->dbConnection );
         $this->securityClass = new Security();
