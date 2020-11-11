@@ -40,37 +40,37 @@ if ( $userData[ Users::COLUMN_USER_TYPE ] !== Users::USER_TYPE_ADMIN ) {
                         <div class="user-data">
                             <span>First Name: </span>
                             <span>
-                                <input type="text" name="first_name" />
+                                <input type="text" required name="first_name" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Last Name: </span>
                             <span>
-                                <input type="text" name="last_name" />
+                                <input type="text" required name="last_name" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Email: </span>
                             <span>
-                                <input type="email" name="email" />
+                                <input type="email" required name="email" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Password: </span>
                             <span>
-                                <input type="password" name="password" />
+                                <input type="password" required name="password" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Confirm Password: </span>
                             <span>
-                                <input type="password" name="password_2" />
+                                <input type="password" required name="password_2" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>User Type: </span>
                             <span>
-                                <select name="user_type">
+                                <select name="user_type" required>
                                     <option value="<?php echo Users::USER_TYPE_ADMIN ?>"><?php echo Users::USER_TYPE_ADMIN ?></option>
                                     <option value="<?php echo Users::USER_TYPE_EMPLOYEE ?>"><?php echo Users::USER_TYPE_EMPLOYEE ?></option>
                                 </select>

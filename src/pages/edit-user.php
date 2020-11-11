@@ -49,19 +49,19 @@ $user = $userEntity->find([ Users::COLUMN_ID => $_GET['id'] ], 1);
                         <div class="user-data">
                             <span>First Name: </span>
                             <span>
-                                <input type="text" name="first_name" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_FIRST_NAME ] ) ?>" />
+                                <input type="text" required name="first_name" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_FIRST_NAME ] ) ?>" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Last Name: </span>
                             <span>
-                                <input type="text" name="last_name" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_LAST_NAME ] ) ?>" />
+                                <input type="text" required name="last_name" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_LAST_NAME ] ) ?>" />
                             </span>
                         </div>
                         <div class="user-data">
                             <span>Email: </span>
                             <span>
-                                <input type="email" name="email" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_EMAIL ] ) ?>" />
+                                <input type="email" required name="email" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_EMAIL ] ) ?>" />
                             </span>
                         </div>
                         <div class="user-data">
@@ -79,7 +79,7 @@ $user = $userEntity->find([ Users::COLUMN_ID => $_GET['id'] ], 1);
                         <div class="user-data">
                             <span>User Type: </span>
                             <span>
-                                <select name="user_type" value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_USER_TYPE ] ) ?>">
+                                <select name="user_type" required value="<?php echo $security->preventXSS( $user[0][ Users::COLUMN_USER_TYPE ] ) ?>">
                                     <option value="<?php echo Users::USER_TYPE_ADMIN ?>"><?php echo Users::USER_TYPE_ADMIN ?></option>
                                     <option value="<?php echo Users::USER_TYPE_EMPLOYEE ?>"><?php echo Users::USER_TYPE_EMPLOYEE ?></option>
                                 </select>
