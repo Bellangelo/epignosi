@@ -107,13 +107,18 @@ class EntityFunctionality implements Entity
      * @return array $results
      * @throws Exception
      */
-    public function find( $values, $limit = null, $returnValues = null, $orderBy = null )
+    public function find( $values = '', $limit = null, $returnValues = null, $orderBy = null )
     {
         $results = [];
         // Validate keys.
-        foreach ( $values as $key => $value ) {
-            $this->validateKey( $key );
+        if ( !empty( $values ) ) {
+
+            foreach ( $values as $key => $value ) {
+                $this->validateKey( $key );
+            }
+
         }
+
         // Validate returned values.
         if ( !empty( $returnValues ) ) {
 
@@ -209,7 +214,7 @@ class EntityFunctionality implements Entity
      * @param string $orderBy
      * @return string
      */
-    private function createSelectSQL( $values, $limit = null, $returnValues = null, $orderBy = null )
+    private function createSelectSQL( $values = '', $limit = null, $returnValues = null, $orderBy = null )
     {
         $returnValuesSQL = '';
         $limitSQL = '';
@@ -236,7 +241,7 @@ class EntityFunctionality implements Entity
         }
 
         // Create the where sql.
-        $whereSQL = $this->arrayToWhere( $values );
+        $whereSQL = empty( $values ) ? '1=1' : $this->arrayToWhere( $values );
 
         // Create order by sql.
         if ( !empty( $orderBy ) ) {
