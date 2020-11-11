@@ -34,7 +34,7 @@ if ( !empty( $vacation ) ) {
     $vacation = $vacation[0];
     
     if ( $vacation[ Vacations::COLUMN_STATUS ] !== Vacations::STATUS_PENDING ) {
-        $responseMessage .= 'Vacation status was "' . Vacations::STATUS_PENDING . '".';
+        $responseMessage .= 'Vacation status was "' . $vacation[ Vacations::COLUMN_STATUS ] . '".';
     }
 
     $values = [ Vacations::COLUMN_STATUS => Vacations::STATUS_APPROVED ];
