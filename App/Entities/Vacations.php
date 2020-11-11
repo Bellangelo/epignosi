@@ -112,7 +112,8 @@ class Vacations extends EntityFunctionality
      * @var array
      */
     protected $allowedToBeEmptyColumns = [
-        self::COLUMN_ID
+        self::COLUMN_ID,
+        self::COLUMN_REASON,
     ];
 
     /**
