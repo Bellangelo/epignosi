@@ -138,7 +138,7 @@ class Vacations extends EntityFunctionality
         $earlier = new \DateTime( $earlier );
         $later = new \DateTime( $later );
 
-        return intval( $later->diff($earlier)->format('%a') ) + 1;
+        return intval( $later->diff($earlier)->d ) + 1;
     }
 
 }
