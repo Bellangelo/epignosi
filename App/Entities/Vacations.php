@@ -107,6 +107,15 @@ class Vacations extends EntityFunctionality
     ];
 
     /**
+     * Allowed to be empty columns.
+     * 
+     * @var array
+     */
+    protected $allowedToBeEmptyColumns = [
+        self::COLUMN_ID
+    ];
+
+    /**
      * Construct function.
      * 
      * @param mysqli $dbConnection
@@ -114,6 +123,21 @@ class Vacations extends EntityFunctionality
     public function __construct( $dbConnection )
     {
         parent::__construct( $dbConnection, self::TABLE_NAME, self::DEFAULT_VACATION_VALUES );
+    }
+
+    /**
+     * Get diffence from 2 dates in days.
+     * 
+     * @param string $earlier
+     * @param string $later
+     * @return string
+     */
+    public function getDifferenceInDays( $earlier, $later )
+    {
+        $earlier = new \DateTime( $earlier );
+        $later = new \DateTime( $later );
+
+        return intval( $later->diff($earlier)->format('%a') ) + 1;
     }
 
 }

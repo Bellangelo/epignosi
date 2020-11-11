@@ -13,7 +13,7 @@ $users = $userEntity->find();
 ?>
 <!DOCTYPE html>
     <head>
-        <title>Admin Portal</title>
+        <title>Users List</title>
         <link href="/epignosi/css/admin.css" rel="stylesheet" />
         <script src="/epignosi/js/api_fetch.js"></script>
     </head>

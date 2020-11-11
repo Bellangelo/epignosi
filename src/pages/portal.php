@@ -16,9 +16,9 @@ $userEntity = new Users( $dbConnection );
 $userData = $userEntity->find([ Users::COLUMN_ID => $app->getAuth()->getUserId() ])[0];
 
 if ( $userData[ Users::COLUMN_USER_TYPE ] === Users::USER_TYPE_ADMIN ) {
-    require_once( 'admin.php' );
+    require_once( 'users-list.php' );
 } else {
-    require_once( 'employee.php' );
+    require_once( 'vacations-list.php' );
 }
 
 ?>
